@@ -1,6 +1,33 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+
+import { fetchCoins } from '../utils/api';
+
 
 const Home = () => {
+
+    const [topMovers, setTopMovers] = useState([]);
+    useEffect(() => {
+        (async () => {
+            try {
+                const allCoins = await fetchCoins();
+
+                if (!Array.isArray(allCoins)) {
+                    console.warn('fetchCoins did not return an array:', allCoins);
+                    // Handle gracefully — maybe set topMovers to [] or return
+                    return;
+                }
+
+                const sortedCoins = allCoins.sort(
+                    (a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h
+                );
+                setTopMovers(sortedCoins.slice(0, 4));
+            } catch (error) {
+                console.error('Error fetching top movers:', error);
+            }
+        })();
+    }, []);
+
+
     return (
         <>
             {/* Hero Section */}
@@ -73,27 +100,30 @@ const Home = () => {
                     </div>
                     {/* Placeholder content - you can replace this with a slider or dynamic data */}
                     <div className="grid md:grid-cols-4 gap-8">
-                        <div className="bg-[#1C1C1C] p-8 rounded-xl text-center hover:shadow-2xl transition transform hover:scale-105">
-                            <h3 className="text-2xl font-bold mb-2">Bitcoin (BTC)</h3>
-                            <p className="text-positive text-xl font-medium">+5.8%</p>
-                            <p className="text-secondary-text mt-3">24h Change</p>
-                        </div>
-                        <div className="bg-[#1C1C1C] p-8 rounded-xl text-center hover:shadow-2xl transition transform hover:scale-105">
-                            <h3 className="text-2xl font-bold mb-2">Ethereum (ETH)</h3>
-                            <p className="text-positive text-xl font-medium">+3.2%</p>
-                            <p className="text-secondary-text mt-3">24h Change</p>
-                        </div>
-                        <div className="bg-[#1C1C1C] p-8 rounded-xl text-center hover:shadow-2xl transition transform hover:scale-105">
-                            <h3 className="text-2xl font-bold mb-2">Solana (SOL)</h3>
-                            <p className="text-negative text-xl font-medium">-1.5%</p>
-                            <p className="text-secondary-text mt-3">24h Change</p>
-                        </div>
-                        <div className="bg-[#1C1C1C] p-8 rounded-xl text-center hover:shadow-2xl transition transform hover:scale-105">
-                            <h3 className="text-2xl font-bold mb-2">Cardano (ADA)</h3>
-                            <p className="text-positive text-xl font-medium">+2.7%</p>
-                            <p className="text-secondary-text mt-3">24h Change</p>
-                        </div>
+                        {topMovers.map((coin) => {
+                            const priceChange = coin.price_change_percentage_24h;
+                            const isPositive = priceChange >= 0;
+
+                            return (
+                                <div
+                                    key={coin.id}
+                                    className="bg-[#1C1C1C] p-8 rounded-xl text-center hover:shadow-2xl transition transform hover:scale-105"
+                                >
+                                    <h3 className="text-2xl font-bold mb-2 text-white">
+                                        {coin.name} ({coin.symbol.toUpperCase()})
+                                    </h3>
+                                    <p
+                                        className={`text-xl font-medium ${isPositive ? 'text-positive' : 'text-negative'
+                                            }`}
+                                    >
+                                        {priceChange.toFixed(2)}%
+                                    </p>
+                                    <p className="text-secondary-text mt-3">24h Change</p>
+                                </div>
+                            );
+                        })}
                     </div>
+
                 </div>
             </section>
 
