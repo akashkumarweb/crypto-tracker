@@ -1,33 +1,51 @@
+// src/pages/Markets.jsx
 import React, { useEffect, useState } from 'react'
+import { fetchCoins } from '../utils/api'
+// import { useWatchlist } from '../context/WatchlistContext' // if using a context
 
-const Watchlist = () => {
-    const [watchlist, setWatchlist] = useState([])
+const Markets = () => {
+    const [coins, setCoins] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(null)
+
+    // If using context:
+    // const { addToWatchlist } = useWatchlist()
 
     useEffect(() => {
-        // Load watchlist from local storage on mount
-        const storedList = JSON.parse(localStorage.getItem('watchlist') || '[]')
-        setWatchlist(storedList)
+        (async () => {
+            try {
+                setLoading(true)
+                const data = await fetchCoins() // returns an array of coin objects
+                setCoins(data)
+            } catch (err) {
+                console.error('Error fetching markets:', err)
+                setError('Failed to fetch coin data.')
+            } finally {
+                setLoading(false)
+            }
+        })()
     }, [])
 
-    // Optionally remove coin from watchlist
-    const handleRemove = (coinId) => {
-        const updated = watchlist.filter((c) => c.id !== coinId)
-        setWatchlist(updated)
-        localStorage.setItem('watchlist', JSON.stringify(updated))
+    // For demonstration: local watchlist approach
+    const handleAddToWatchlist = (coin) => {
+        // If using context: addToWatchlist(coin)
+        // Otherwise, local approach:
+        const existingList = JSON.parse(localStorage.getItem('watchlist') || '[]')
+        if (!existingList.find((c) => c.id === coin.id)) {
+            existingList.push(coin)
+            localStorage.setItem('watchlist', JSON.stringify(existingList))
+            alert(`${coin.name} added to watchlist`)
+        } else {
+            alert(`${coin.name} is already in watchlist`)
+        }
     }
 
-    if (!watchlist.length) {
-        return (
-            <div className="p-6 bg-primary-bg min-h-screen text-primary-text">
-                <h1 className="text-3xl font-bold mb-6">Your Watchlist</h1>
-                <p className="text-secondary-text">No coins in your watchlist yet.</p>
-            </div>
-        )
-    }
+    if (loading) return <div className="p-6">Loading coins...</div>
+    if (error) return <div className="p-6 text-red-500">{error}</div>
 
     return (
         <div className="p-6 bg-primary-bg min-h-screen text-primary-text">
-            <h1 className="text-3xl font-bold mb-6">Your Watchlist</h1>
+            <h1 className="text-3xl font-bold mb-6">Markets</h1>
 
             <div className="overflow-x-auto bg-white rounded-md shadow p-4">
                 <table className="w-full text-left">
@@ -40,7 +58,7 @@ const Watchlist = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {watchlist.map((coin) => {
+                        {coins.map((coin) => {
                             const priceChange = coin.price_change_percentage_24h || 0
                             const isPositive = priceChange >= 0
 
@@ -69,10 +87,10 @@ const Watchlist = () => {
                                     </td>
                                     <td className="py-2 px-3 text-right">
                                         <button
-                                            onClick={() => handleRemove(coin.id)}
-                                            className="bg-negative hover:bg-red-600 text-white px-4 py-2 rounded text-sm"
+                                            onClick={() => handleAddToWatchlist(coin)}
+                                            className="bg-accent-1 hover:bg-accent-2 text-white px-4 py-2 rounded text-sm"
                                         >
-                                            Remove
+                                            + Watchlist
                                         </button>
                                     </td>
                                 </tr>
@@ -85,4 +103,4 @@ const Watchlist = () => {
     )
 }
 
-export default Watchlist
+export default Markets
