@@ -1,22 +1,31 @@
-// src/pages/Markets.jsx
 import React, { useEffect, useState } from 'react'
 import { fetchCoins } from '../utils/api'
-// import { useWatchlist } from '../context/WatchlistContext' // if using a context
+import { auth, db } from '../utils/firebase'
+import { doc, getDoc, updateDoc } from 'firebase/firestore'
 
 const Markets = () => {
     const [coins, setCoins] = useState([])
+    const [watchlist, setWatchlist] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
-
-    // If using context:
-    // const { addToWatchlist } = useWatchlist()
 
     useEffect(() => {
         (async () => {
             try {
                 setLoading(true)
-                const data = await fetchCoins() // returns an array of coin objects
+                // 1) Fetch coins
+                const data = await fetchCoins()
                 setCoins(data)
+
+                // 2) If user is logged in, load watchlist from Firestore
+                if (auth.currentUser) {
+                    const userDoc = doc(db, 'users', auth.currentUser.uid)
+                    const snapshot = await getDoc(userDoc)
+                    if (snapshot.exists()) {
+                        const userData = snapshot.data()
+                        setWatchlist(userData.watchlist || [])
+                    }
+                }
             } catch (err) {
                 console.error('Error fetching markets:', err)
                 setError('Failed to fetch coin data.')
@@ -26,17 +35,33 @@ const Markets = () => {
         })()
     }, [])
 
-    // For demonstration: local watchlist approach
-    const handleAddToWatchlist = (coin) => {
-        // If using context: addToWatchlist(coin)
-        // Otherwise, local approach:
-        const existingList = JSON.parse(localStorage.getItem('watchlist') || '[]')
-        if (!existingList.find((c) => c.id === coin.id)) {
-            existingList.push(coin)
-            localStorage.setItem('watchlist', JSON.stringify(existingList))
+    const handleAddToWatchlist = async (coin) => {
+        // Check if user is logged in
+        const currentUser = auth.currentUser
+        if (!currentUser) {
+            alert('You must be logged in to add coins to your watchlist!')
+            return
+        }
+
+        const alreadyIn = watchlist.find((c) => c.id === coin.id)
+        if (alreadyIn) {
+            alert(`${coin.name} is already in your watchlist.`)
+            return
+        }
+
+        try {
+            const updatedList = [...watchlist, coin]
+            setWatchlist(updatedList)
+
+            // Update Firestore doc
+            const userDoc = doc(db, 'users', currentUser.uid)
+                - await updateDoc(doc(db, 'users', user.uid), { watchlist: updatedList })
+                + await updateDoc(userDoc, { watchlist: updatedList })
+
             alert(`${coin.name} added to watchlist`)
-        } else {
-            alert(`${coin.name} is already in watchlist`)
+        } catch (err) {
+            console.error('Error adding to watchlist:', err)
+            alert('Could not add coin to watchlist.')
         }
     }
 
@@ -61,6 +86,7 @@ const Markets = () => {
                         {coins.map((coin) => {
                             const priceChange = coin.price_change_percentage_24h || 0
                             const isPositive = priceChange >= 0
+                            const isInWatchlist = watchlist.some((w) => w.id === coin.id)
 
                             return (
                                 <tr key={coin.id} className="border-b last:border-none">
@@ -88,9 +114,14 @@ const Markets = () => {
                                     <td className="py-2 px-3 text-right">
                                         <button
                                             onClick={() => handleAddToWatchlist(coin)}
-                                            className="bg-accent-1 hover:bg-accent-2 text-white px-4 py-2 rounded text-sm"
+                                            disabled={isInWatchlist}
+                                            className={
+                                                isInWatchlist
+                                                    ? 'bg-gray-400 text-white px-4 py-2 rounded text-sm cursor-not-allowed'
+                                                    : 'bg-accent-1 hover:bg-accent-2 text-white px-4 py-2 rounded text-sm'
+                                            }
                                         >
-                                            + Watchlist
+                                            {isInWatchlist ? 'Added' : '+ Watchlist'}
                                         </button>
                                     </td>
                                 </tr>

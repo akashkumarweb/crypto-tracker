@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { useAuth } from '../context/AuthContext'
+import { useWatchlist } from '../context/WatchlistContext'
 
 const Watchlist = () => {
-    const [watchlist, setWatchlist] = useState([])
+    const { user } = useAuth()
+    const { watchlist, loading, removeFromWatchlist } = useWatchlist()
 
-    useEffect(() => {
-        // Load watchlist from local storage on mount
-        const storedList = JSON.parse(localStorage.getItem('watchlist') || '[]')
-        setWatchlist(storedList)
-    }, [])
+    if (loading) {
+        return <div className="p-6">Loading watchlist...</div>
+    }
 
-    // Optionally remove coin from watchlist
-    const handleRemove = (coinId) => {
-        const updated = watchlist.filter((c) => c.id !== coinId)
-        setWatchlist(updated)
-        localStorage.setItem('watchlist', JSON.stringify(updated))
+    if (!user) {
+        return (
+            <div className="p-6 bg-primary-bg min-h-screen text-primary-text">
+                <h1 className="text-3xl font-bold mb-6">Your Watchlist</h1>
+                <p className="text-red-500">You must be logged in to view your watchlist.</p>
+            </div>
+        )
     }
 
     if (!watchlist.length) {
@@ -69,7 +72,7 @@ const Watchlist = () => {
                                     </td>
                                     <td className="py-2 px-3 text-right">
                                         <button
-                                            onClick={() => handleRemove(coin.id)}
+                                            onClick={() => removeFromWatchlist(coin.id)}
                                             className="bg-negative hover:bg-red-600 text-white px-4 py-2 rounded text-sm"
                                         >
                                             Remove

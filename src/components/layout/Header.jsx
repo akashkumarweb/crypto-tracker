@@ -1,12 +1,23 @@
 import React, { useState } from 'react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useAuth } from '../../context/AuthContext' // adapt path as needed
 
 const Header = () => {
     const [drawerOpen, setDrawerOpen] = useState(false)
+    const { user, logout } = useAuth()
 
     const handleToggle = () => {
         setDrawerOpen(!drawerOpen)
     }
+
+    const handleLogout = () => {
+        logout()
+        // Optionally redirect or close the drawer
+        setDrawerOpen(false)
+    }
+
+    // If the user has displayName (e.g., Google sign-in), use that. Otherwise fallback to email.
+    const username = user?.displayName || user?.email
 
     return (
         <header className="bg-white border-b border-gray-200 shadow-sm">
@@ -19,9 +30,6 @@ const Header = () => {
                             className="h-8 w-auto mr-2"
                             alt="Logo"
                         />
-                        {/* <span className="text-xl font-semibold text-gray-800 whitespace-nowrap">
-                            Crypto Analysis
-                        </span> */}
                     </a>
                 </div>
 
@@ -55,18 +63,40 @@ const Header = () => {
 
                 {/* Desktop Buttons */}
                 <div className="hidden md:flex items-center space-x-4">
-                    <a
-                        href="/login"
-                        className="text-gray-600 hover:text-gray-900 font-medium transition-colors"
-                    >
-                        Log in
-                    </a>
-                    <a
-                        href="#"
-                        className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded px-4 py-2 transition-colors"
-                    >
-                        Get started
-                    </a>
+                    {user ? (
+                        <>
+                            <span className="text-gray-600 font-medium">
+                                {username}
+                            </span>
+                            <a
+                                href="/profile"
+                                className="text-gray-600 hover:text-gray-900 font-medium transition-colors"
+                            >
+                                Profile
+                            </a>
+                            <button
+                                onClick={handleLogout}
+                                className="text-gray-600 hover:text-gray-900 font-medium transition-colors"
+                            >
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <a
+                                href="/login"
+                                className="text-gray-600 hover:text-gray-900 font-medium transition-colors"
+                            >
+                                Log in
+                            </a>
+                            <a
+                                href="/signup"
+                                className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded px-4 py-2 transition-colors"
+                            >
+                                Get started
+                            </a>
+                        </>
+                    )}
                 </div>
 
                 {/* Mobile Hamburger */}
@@ -112,7 +142,7 @@ const Header = () => {
                     <ul className="flex flex-col space-y-4">
                         <li>
                             <a
-                                href="#"
+                                href="/"
                                 className="block text-gray-600 hover:text-gray-900 font-medium transition-colors"
                                 onClick={handleToggle}
                             >
@@ -121,7 +151,7 @@ const Header = () => {
                         </li>
                         <li>
                             <a
-                                href="#"
+                                href="/markets"
                                 className="block text-gray-600 hover:text-gray-900 font-medium transition-colors"
                                 onClick={handleToggle}
                             >
@@ -130,7 +160,7 @@ const Header = () => {
                         </li>
                         <li>
                             <a
-                                href="#"
+                                href="/watchlist"
                                 className="block text-gray-600 hover:text-gray-900 font-medium transition-colors"
                                 onClick={handleToggle}
                             >
@@ -140,20 +170,44 @@ const Header = () => {
                     </ul>
 
                     <div className="mt-6 flex flex-col space-y-3">
-                        <a
-                            href="/login"
-                            className="block text-gray-600 hover:text-gray-900 font-medium transition-colors"
-                            onClick={handleToggle}
-                        >
-                            Log in
-                        </a>
-                        <a
-                            href="#"
-                            className="block bg-blue-600 hover:bg-blue-700 text-white font-medium rounded px-4 py-2 transition-colors text-center"
-                            onClick={handleToggle}
-                        >
-                            Get started
-                        </a>
+                        {user ? (
+                            <>
+                                <span className="block text-gray-600 font-medium">{username}</span>
+                                <a
+                                    href="/profile"
+                                    className="block text-gray-600 hover:text-gray-900 font-medium transition-colors"
+                                    onClick={handleToggle}
+                                >
+                                    Profile
+                                </a>
+                                <button
+                                    onClick={() => {
+                                        handleLogout()
+                                        handleToggle()
+                                    }}
+                                    className="block text-left text-gray-600 hover:text-gray-900 font-medium transition-colors"
+                                >
+                                    Logout
+                                </button>
+                            </>
+                        ) : (
+                            <>
+                                <a
+                                    href="/login"
+                                    className="block text-gray-600 hover:text-gray-900 font-medium transition-colors"
+                                    onClick={handleToggle}
+                                >
+                                    Log in
+                                </a>
+                                <a
+                                    href="/signup"
+                                    className="block bg-blue-600 hover:bg-blue-700 text-white font-medium rounded px-4 py-2 transition-colors text-center"
+                                    onClick={handleToggle}
+                                >
+                                    Get started
+                                </a>
+                            </>
+                        )}
                     </div>
                 </nav>
             </div>
