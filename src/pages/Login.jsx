@@ -1,6 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../utils/firebase'
+import { useNavigate } from 'react-router-dom'
 
 const Login = () => {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [error, setError] = useState(null)
+    const navigate = useNavigate()
+
+    const handleLogin = async (e) => {
+        e.preventDefault()            // Prevent page refresh
+        setError(null)
+
+        try {
+            // Attempt Firebase login
+            await signInWithEmailAndPassword(auth, email, password)
+            // On success, navigate to markets or wherever:
+            navigate('/markets')
+        } catch (err) {
+            console.error('Login error:', err)
+            setError(err.message)
+        }
+    }
+
     return (
         <div className="bg-primary-bg min-h-screen flex flex-col md:flex-row">
             {/* Left Side: Background Image & Branding */}
@@ -23,7 +46,10 @@ const Login = () => {
             <div className="w-full md:w-1/2 flex items-center justify-center p-4 md:p-16">
                 <div className="bg-white w-full max-w-sm rounded-xl shadow-lg p-8 md:p-10">
                     <h2 className="text-3xl font-bold text-primary-text mb-8">Sign In</h2>
-                    <form className="space-y-6">
+
+                    {error && <p className="text-red-500 mb-4">{error}</p>}
+
+                    <form className="space-y-6" onSubmit={handleLogin}>
                         <div>
                             <label htmlFor="email" className="block mb-2 text-secondary-text font-medium">
                                 Email Address
@@ -32,7 +58,10 @@ const Login = () => {
                                 id="email"
                                 type="email"
                                 placeholder="yourname@example.com"
-                                className="w-full border border-gray-300 focus:border-accent-1 rounded-lg px-4 py-3 text-primary-text placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-accent-1 transition-colors"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="w-full border border-gray-300 focus:border-accent-1 rounded-lg px-4 py-3 text-primary-text placeholder-gray-400 
+                           focus:outline-none focus:ring-1 focus:ring-accent-1 transition-colors"
                             />
                         </div>
                         <div>
@@ -43,9 +72,13 @@ const Login = () => {
                                 id="password"
                                 type="password"
                                 placeholder="••••••••"
-                                className="w-full border border-gray-300 focus:border-accent-1 rounded-lg px-4 py-3 text-primary-text placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-accent-1 transition-colors"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="w-full border border-gray-300 focus:border-accent-1 rounded-lg px-4 py-3 text-primary-text placeholder-gray-400
+                           focus:outline-none focus:ring-1 focus:ring-accent-1 transition-colors"
                             />
                         </div>
+
                         <div className="flex items-center justify-between text-sm">
                             <label className="flex items-center text-secondary-text">
                                 <input
@@ -54,10 +87,11 @@ const Login = () => {
                                 />
                                 Remember Me
                             </label>
-                            <a href="#" className="text-accent-1 hover:underline">
+                            <a href="/forgot-password" className="text-accent-1 hover:underline">
                                 Forgot Password?
                             </a>
                         </div>
+
                         <button
                             type="submit"
                             className="w-full bg-accent-1 hover:bg-accent-2 text-white font-semibold py-3 rounded-lg transition-colors text-lg"
@@ -65,8 +99,12 @@ const Login = () => {
                             Sign In
                         </button>
                     </form>
+
                     <p className="text-center text-secondary-text mt-8">
-                        Don’t have an account? <a href="#" className="text-accent-1 hover:underline font-medium">Sign Up</a>
+                        Don’t have an account?{' '}
+                        <a href="/signup" className="text-accent-1 hover:underline font-medium">
+                            Sign Up
+                        </a>
                     </p>
                 </div>
             </div>

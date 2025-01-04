@@ -10,45 +10,55 @@ export const WatchlistProvider = ({ children }) => {
     const [watchlist, setWatchlist] = useState([])
     const [loading, setLoading] = useState(true)
 
-    // Listen to the current user's watchlist in Firestore
     useEffect(() => {
-        // If no user, clear watchlist and skip
         if (!user) {
+            // If no user is logged in, clear watchlist and stop loading
             setWatchlist([])
             setLoading(false)
             return
         }
 
-        // Real-time listener on the user's "users/{uid}" doc
+        // Real-time listener on "users/{uid}" doc
         const docRef = doc(db, 'users', user.uid)
-        const unsubscribe = onSnapshot(docRef, (snapshot) => {
-            if (snapshot.exists()) {
-                setWatchlist(snapshot.data().watchlist || [])
-            } else {
-                setWatchlist([])
+        const unsubscribe = onSnapshot(
+            docRef,
+            (snapshot) => {
+                if (snapshot.exists()) {
+                    setWatchlist(snapshot.data().watchlist || [])
+                } else {
+                    setWatchlist([])
+                }
+                setLoading(false)
+            },
+            (error) => {
+                console.error('Watchlist snapshot error:', error)
+                setLoading(false)
             }
-            setLoading(false)
-        }, (error) => {
-            console.error('Watchlist snapshot error:', error)
-            setLoading(false)
-        })
+        )
 
         return () => unsubscribe()
     }, [user])
 
-    // Remove coin from watchlist in Firestore
+    // Remove a coin by ID
     const removeFromWatchlist = async (coinId) => {
         if (!user) return
         try {
             const updatedList = watchlist.filter((c) => c.id !== coinId)
-            await updateDoc(doc(db, 'users', currentUser.uid), { watchlist: updatedList })
+            await updateDoc(doc(db, 'users', user.uid), { watchlist: updatedList })
         } catch (err) {
-            console.error('Error removing coin:', err)
+            console.error('Error removing coin from watchlist:', err)
         }
     }
 
     return (
-        <WatchlistContext.Provider value={{ watchlist, loading, removeFromWatchlist }}>
+        <WatchlistContext.Provider
+            value={{
+                watchlist,
+                setWatchlist,    // Expose setWatchlist if you need to manually update it
+                loading,
+                removeFromWatchlist,
+            }}
+        >
             {children}
         </WatchlistContext.Provider>
     )

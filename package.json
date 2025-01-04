@@ -20,7 +20,9 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
     "react-redux": "^9.2.0",
-    "react-router-dom": "^6.28.0"
+    "react-router-dom": "^6.28.0",
+    "sweetalert2": "^11.15.10",
+    "sweetalert2-react-content": "^5.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
