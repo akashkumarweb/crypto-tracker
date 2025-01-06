@@ -78,12 +78,6 @@ const Header = () => {
                                 {username}
                             </span>
                             <a
-                                href="/profile"
-                                className="text-primary-text dark:text-dark-text hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
-                            >
-                                Profile
-                            </a>
-                            <a
                                 href="/logout"
                                 className="text-primary-text dark:text-dark-text hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
                             >
@@ -203,13 +197,6 @@ const Header = () => {
                                 <span className="block text-primary-text dark:text-dark-text font-medium">
                                     {username}
                                 </span>
-                                <a
-                                    href="/profile"
-                                    onClick={handleToggleDrawer}
-                                    className="block text-primary-text dark:text-dark-text hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
-                                >
-                                    Profile
-                                </a>
                                 <a
                                     href="/logout"
                                     onClick={handleToggleDrawer}
