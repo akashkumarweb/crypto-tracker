@@ -19,3 +19,23 @@ body {
     background-color: var(--bg-color);
     color: var(--text-color);
 }
+
+.bg-accent-1 {
+    background-color: #2563eb;
+    /* Blue accent */
+}
+
+.dark\:bg-dark-bg {
+    background-color: #18181b;
+    /* Almost black for dark mode */
+}
+
+.text-positive {
+    color: #16a34a;
+    /* Green for positive change */
+}
+
+.text-negative {
+    color: #dc2626;
+    /* Red for negative change */
+}

@@ -13,19 +13,15 @@ const Markets = () => {
     const [coins, setCoins] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
-
-    // --- watchlist & setWatchlist come from context, not local state ---
     const { user, watchlist, setWatchlist } = useWatchlist()
 
     useEffect(() => {
         (async () => {
             try {
                 setLoading(true)
-                // 1) Fetch coins from your API
                 const data = await fetchCoins()
                 setCoins(data)
 
-                // 2) If user is logged in, load watchlist from Firestore
                 if (auth.currentUser) {
                     const userDoc = doc(db, 'users', auth.currentUser.uid)
                     const snapshot = await getDoc(userDoc)
@@ -44,8 +40,7 @@ const Markets = () => {
     }, [])
 
     const handleAddToWatchlist = async (coin) => {
-        const currentUser = auth.currentUser
-        if (!currentUser) {
+        if (!auth.currentUser) {
             return MySwal.fire({
                 title: 'Not logged in!',
                 text: 'You must be logged in to add coins to your watchlist!',
@@ -59,8 +54,7 @@ const Markets = () => {
             })
         }
 
-        const alreadyIn = watchlist.find((c) => c.id === coin.id)
-        if (alreadyIn) {
+        if (watchlist.some((c) => c.id === coin.id)) {
             return MySwal.fire({
                 title: 'Already in Watchlist',
                 text: `${coin.name} is already in your watchlist.`,
@@ -77,9 +71,7 @@ const Markets = () => {
         try {
             const updatedList = [...watchlist, coin]
             setWatchlist(updatedList)
-
-            // Use setDoc with { merge: true } to create or update the doc
-            const userDoc = doc(db, 'users', currentUser.uid)
+            const userDoc = doc(db, 'users', auth.currentUser.uid)
             await setDoc(userDoc, { watchlist: updatedList }, { merge: true })
 
             MySwal.fire({
@@ -109,63 +101,61 @@ const Markets = () => {
         }
     }
 
-    if (loading) return <div className="p-6">Loading coins...</div>
-    if (error) return <div className="p-6 text-red-500">{error}</div>
+    if (loading) return <div className="p-6 text-center text-lg">🔄 Loading markets...</div>
+    if (error) return <div className="p-6 text-center text-red-500">{error}</div>
 
     return (
-        <div className="p-6 bg-primary-bg min-h-screen text-primary-text">
-            <h1 className="text-3xl font-bold mb-6">Markets</h1>
+        <div className="p-6 min-h-screen bg-primary-bg text-primary-text dark:bg-dark-bg dark:text-dark-text transition-colors">
+            <h1 className="text-4xl font-extrabold mb-8 text-center">📈 Crypto Markets</h1>
 
-            <div className="overflow-x-auto bg-white rounded-md shadow p-4">
+            <div className="bg-white dark:bg-[#1C1C1C] rounded-lg shadow-lg overflow-hidden transition-transform">
                 <table className="w-full text-left">
-                    <thead className="border-b border-gray-200">
+                    <thead className="bg-accent-1 text-white dark:text-dark-bg">
                         <tr>
-                            <th className="py-2 px-3">Coin</th>
-                            <th className="py-2 px-3">Price (USD)</th>
-                            <th className="py-2 px-3">24h %</th>
-                            <th className="py-2 px-3"></th>
+                            <th className="py-4 px-4">Coin</th>
+                            <th className="py-4 px-4">Price (USD)</th>
+                            <th className="py-4 px-4">24h % Change</th>
+                            <th className="py-4 px-4"></th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
                         {coins.map((coin) => {
                             const priceChange = coin.price_change_percentage_24h || 0
                             const isPositive = priceChange >= 0
                             const isInWatchlist = watchlist.some((w) => w.id === coin.id)
 
                             return (
-                                <tr key={coin.id} className="border-b last:border-none">
-                                    <td className="py-2 px-3 flex items-center space-x-2">
+                                <tr key={coin.id} className="hover:bg-gray-50 dark:hover:bg-gray-800 transition">
+                                    <td className="py-4 px-4 flex items-center space-x-4">
                                         <img
                                             src={coin.image}
                                             alt={coin.name}
-                                            className="w-5 h-5"
+                                            className="w-8 h-8 rounded-full"
                                         />
-                                        <span className="font-medium">
-                                            {coin.name} ({coin.symbol.toUpperCase()})
-                                        </span>
+                                        <div>
+                                            <span className="font-semibold text-lg">{coin.name}</span>
+                                            <p className="text-sm text-gray-500 dark:text-gray-400 uppercase">{coin.symbol}</p>
+                                        </div>
                                     </td>
-                                    <td className="py-2 px-3">
-                                        ${coin.current_price.toLocaleString()}
-                                    </td>
-                                    <td className="py-2 px-3">
+                                    <td className="py-4 px-4 text-lg font-medium">${coin.current_price.toLocaleString()}</td>
+                                    <td className="py-4 px-4">
                                         <span
-                                            className={`font-semibold ${isPositive ? 'text-positive' : 'text-negative'
-                                                }`}
+                                            className={`px-2 py-1 rounded-lg text-sm font-bold ${isPositive ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}
                                         >
                                             {priceChange.toFixed(2)}%
                                         </span>
                                     </td>
-                                    <td className="py-2 px-3 text-right">
+                                    <td className="py-4 px-4 text-right">
                                         <button
                                             onClick={() => handleAddToWatchlist(coin)}
                                             disabled={isInWatchlist}
-                                            className={
-                                                isInWatchlist
-                                                    ? 'bg-gray-400 text-white px-4 py-2 rounded text-sm cursor-not-allowed'
-                                                    : 'bg-accent-1 hover:bg-accent-2 text-white px-4 py-2 rounded text-sm'
-                                            }
+                                            className={`px-4 py-2 rounded-lg font-semibold transition-all duration-300 ease-in-out
+                                            ${isInWatchlist
+                                                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                                                    : 'bg-blue-500 hover:bg-blue-600 text-white'
+                                                }`}
                                         >
-                                            {isInWatchlist ? 'Added' : '+ Watchlist'}
+                                            {isInWatchlist ? 'In Watchlist' : '+ Watchlist'}
                                         </button>
                                     </td>
                                 </tr>
