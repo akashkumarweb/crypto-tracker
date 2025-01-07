@@ -88,9 +88,9 @@ const Home = () => {
             </section>
 
             {/* HOW IT WORKS */}
-            <section className="py-16 bg-gradient-to-t from-blue-50 to-white dark:bg-[#2C2C2C]">
+            <section className="py-16 bg-gradient-to-t from-blue-50 to-white dark:from-[#2C2C2C] dark:to-[#1C1C1C]">
                 <div className="max-w-screen-xl mx-auto px-4 text-center">
-                    <h2 className="text-4xl font-bold mb-10">How It Works</h2>
+                    <h2 className="text-4xl font-bold mb-10 text-gray-900 dark:text-white">How It Works</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
                         {[
                             { step: '1', title: 'Create Account', desc: 'Sign up and verify your identity.' },
@@ -99,18 +99,19 @@ const Home = () => {
                         ].map((item, index) => (
                             <div
                                 key={index}
-                                className="p-8 bg-white dark:bg-[#1C1C1C] rounded-xl shadow-lg transform transition hover:-translate-y-3 hover:shadow-2xl"
+                                className="p-8 bg-white dark:bg-[#2C2C2C] text-gray-900 dark:text-gray-200 rounded-xl shadow-lg transform transition hover:-translate-y-3 hover:shadow-2xl"
                             >
                                 <div className="w-12 h-12 bg-accent-1 text-white rounded-full flex items-center justify-center text-xl font-bold mb-4 mx-auto">
                                     {item.step}
                                 </div>
                                 <h3 className="text-2xl font-semibold mb-4">{item.title}</h3>
-                                <p className="text-secondary-text">{item.desc}</p>
+                                <p className="text-gray-600 dark:text-gray-400">{item.desc}</p>
                             </div>
                         ))}
                     </div>
                 </div>
             </section>
+
 
             {/* TOP MOVERS */}
             <section className="py-16 bg-white dark:bg-[#2A2A3B]">
@@ -134,9 +135,9 @@ const Home = () => {
             </section>
 
             {/* CLIENT TESTIMONIALS */}
-            <section className="py-20 bg-gradient-to-b from-gray-50 to-[#F5F8FF] dark:bg-[#1C1C1C]">
+            <section className="py-20 bg-gradient-to-b from-gray-50 to-[#F5F8FF] dark:from-[#1C1C1C] dark:to-[#121212]">
                 <div className="max-w-screen-xl mx-auto px-4 text-center">
-                    <h2 className="text-4xl font-bold mb-10">What Clients Say</h2>
+                    <h2 className="text-4xl font-bold mb-10 text-gray-900 dark:text-white">What Clients Say</h2>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
                         {[
                             {
@@ -146,14 +147,15 @@ const Home = () => {
                             { quote: 'The multi-layer security is a game-changer!', author: 'Satoshi G.' },
                             { quote: 'I love the 24/7 support—they’re always responsive.', author: 'Lana B.' },
                         ].map((testimonial, index) => (
-                            <div key={index} className="p-8 bg-white dark:bg-[#2A2A3B] rounded shadow-lg">
-                                <p className="text-lg italic">“{testimonial.quote}”</p>
+                            <div key={index} className="p-8 bg-white dark:bg-[#2A2A3B] text-gray-900 dark:text-gray-200 rounded shadow-lg">
+                                <p className="text-lg italic text-gray-700 dark:text-gray-300">“{testimonial.quote}”</p>
                                 <h4 className="mt-4 font-bold text-accent-1">{testimonial.author}</h4>
                             </div>
                         ))}
                     </div>
                 </div>
             </section>
+
 
             {/* FAQ SECTION */}
             <section className="py-16 bg-white dark:bg-[#1C1C1C]">

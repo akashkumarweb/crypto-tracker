@@ -25,10 +25,10 @@ body {
     /* Blue accent */
 }
 
-.dark\:bg-dark-bg {
-    background-color: #18181b;
-    /* Almost black for dark mode */
-}
+/* .dark\:bg-dark-bg { */
+/* background-color: #18181b; */
+/* Almost black for dark mode */
+/* } */
 
 .text-positive {
     color: #16a34a;

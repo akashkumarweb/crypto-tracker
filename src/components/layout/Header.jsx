@@ -111,7 +111,7 @@ const Header = () => {
 
             {/* Mobile Drawer */}
             <div
-                className={`fixed top-0 left-0 h-full w-64 bg-white dark:bg-[#1c1c1e] shadow-lg transform transition-transform duration-300 ${drawerOpen ? 'translate-x-0' : '-translate-x-full'
+                className={`fixed top-0 left-0 h-full z-10 w-64 bg-white dark:bg-[#1c1c1e] shadow-lg transform transition-transform duration-300 ${drawerOpen ? 'translate-x-0' : '-translate-x-full'
                     } md:hidden`}
             >
                 <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
@@ -121,9 +121,6 @@ const Header = () => {
                             className="h-8 w-auto mr-2"
                             alt="Logo"
                         />
-                        <span className="text-xl font-semibold text-gray-900 dark:text-white">
-                            Crypto Insights
-                        </span>
                     </div>
                     <button
                         onClick={handleToggleDrawer}
