@@ -6,8 +6,6 @@ import useDarkMode from '../../hooks/useDarkMode'
 const Header = () => {
     const [drawerOpen, setDrawerOpen] = useState(false)
     const { user } = useAuth()
-
-    // Use our custom dark mode hook
     const [theme, toggleTheme] = useDarkMode()
 
     const handleToggleDrawer = () => {
@@ -17,7 +15,7 @@ const Header = () => {
     const username = user?.displayName || user?.email
 
     return (
-        <header className="bg-primary-bg dark:bg-dark-bg border-b border-gray-200 dark:border-gray-700 shadow-sm transition-colors">
+        <header className="bg-white dark:bg-[#18181b] border-b border-gray-200 dark:border-gray-700 shadow-sm transition-colors">
             <nav className="max-w-screen-xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between">
                 {/* Logo */}
                 <div className="flex items-center">
@@ -35,7 +33,7 @@ const Header = () => {
                     <li>
                         <a
                             href="/"
-                            className="text-primary-text dark:text-dark-text hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
+                            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
                         >
                             Home
                         </a>
@@ -43,7 +41,7 @@ const Header = () => {
                     <li>
                         <a
                             href="/markets"
-                            className="text-primary-text dark:text-dark-text hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
+                            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
                         >
                             Markets
                         </a>
@@ -51,7 +49,7 @@ const Header = () => {
                     <li>
                         <a
                             href="/watchlist"
-                            className="text-primary-text dark:text-dark-text hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
+                            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
                         >
                             Watchlist
                         </a>
@@ -63,23 +61,23 @@ const Header = () => {
                     {/* Theme Toggle Button */}
                     <button
                         onClick={toggleTheme}
-                        className="p-2 rounded transition-colors text-primary-text dark:text-dark-text hover:bg-gray-200 dark:hover:bg-gray-700"
+                        className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition"
                     >
                         {theme === 'dark' ? (
-                            <SunIcon className="w-5 h-5" />
+                            <SunIcon className="w-5 h-5 text-yellow-400" />
                         ) : (
-                            <MoonIcon className="w-5 h-5" />
+                            <MoonIcon className="w-5 h-5 text-gray-900" />
                         )}
                     </button>
 
                     {user ? (
                         <>
-                            <span className="text-primary-text dark:text-dark-text font-medium">
+                            <span className="text-gray-900 dark:text-white font-medium">
                                 {username}
                             </span>
                             <a
                                 href="/logout"
-                                className="text-primary-text dark:text-dark-text hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
+                                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
                             >
                                 Logout
                             </a>
@@ -88,13 +86,13 @@ const Header = () => {
                         <>
                             <a
                                 href="/login"
-                                className="text-primary-text dark:text-dark-text hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
+                                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
                             >
                                 Log in
                             </a>
                             <a
                                 href="/signup"
-                                className="bg-accent-1 hover:bg-accent-2 text-white font-medium rounded px-4 py-2 transition-colors"
+                                className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded px-4 py-2 transition-colors"
                             >
                                 Get started
                             </a>
@@ -105,7 +103,7 @@ const Header = () => {
                 {/* Mobile Toggle */}
                 <button
                     onClick={handleToggleDrawer}
-                    className="md:hidden text-primary-text dark:text-dark-text hover:text-gray-900 dark:hover:text-white transition-colors"
+                    className="md:hidden text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
                 >
                     <Bars3Icon className="w-6 h-6" />
                 </button>
@@ -113,12 +111,8 @@ const Header = () => {
 
             {/* Mobile Drawer */}
             <div
-                className={`
-          fixed top-0 left-0 h-full w-64 bg-primary-bg dark:bg-dark-bg shadow
-          transform transition-transform duration-300
-          ${drawerOpen ? 'translate-x-0' : '-translate-x-full'}
-          md:hidden
-        `}
+                className={`fixed top-0 left-0 h-full w-64 bg-white dark:bg-[#1c1c1e] shadow-lg transform transition-transform duration-300 ${drawerOpen ? 'translate-x-0' : '-translate-x-full'
+                    } md:hidden`}
             >
                 <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
                     <div className="flex items-center">
@@ -127,13 +121,13 @@ const Header = () => {
                             className="h-8 w-auto mr-2"
                             alt="Logo"
                         />
-                        <span className="text-xl font-semibold text-primary-text dark:text-dark-text whitespace-nowrap">
+                        <span className="text-xl font-semibold text-gray-900 dark:text-white">
                             Crypto Insights
                         </span>
                     </div>
                     <button
                         onClick={handleToggleDrawer}
-                        className="text-primary-text dark:text-dark-text hover:text-gray-900 dark:hover:text-white transition-colors"
+                        className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
                     >
                         <XMarkIcon className="w-6 h-6" />
                     </button>
@@ -146,7 +140,7 @@ const Header = () => {
                             <a
                                 href="/"
                                 onClick={handleToggleDrawer}
-                                className="block text-primary-text dark:text-dark-text hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
+                                className="block text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-400 font-medium transition-colors"
                             >
                                 Home
                             </a>
@@ -155,7 +149,7 @@ const Header = () => {
                             <a
                                 href="/markets"
                                 onClick={handleToggleDrawer}
-                                className="block text-primary-text dark:text-dark-text hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
+                                className="block text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-400 font-medium transition-colors"
                             >
                                 Markets
                             </a>
@@ -164,7 +158,7 @@ const Header = () => {
                             <a
                                 href="/watchlist"
                                 onClick={handleToggleDrawer}
-                                className="block text-primary-text dark:text-dark-text hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
+                                className="block text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-400 font-medium transition-colors"
                             >
                                 Watchlist
                             </a>
@@ -177,30 +171,30 @@ const Header = () => {
                             onClick={() => {
                                 toggleTheme()
                             }}
-                            className="p-2 rounded transition-colors text-primary-text dark:text-dark-text hover:bg-gray-200 dark:hover:bg-gray-700 flex items-center space-x-2"
+                            className="p-2 rounded transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center space-x-2"
                         >
                             {theme === 'dark' ? (
                                 <>
-                                    <SunIcon className="w-5 h-5" />
-                                    <span>Light Mode</span>
+                                    <SunIcon className="w-5 h-5 text-yellow-400" />
+                                    <span className="text-gray-900 dark:text-white">Light Mode</span>
                                 </>
                             ) : (
                                 <>
-                                    <MoonIcon className="w-5 h-5" />
-                                    <span>Dark Mode</span>
+                                    <MoonIcon className="w-5 h-5 text-gray-900" />
+                                    <span className="text-gray-900 dark:text-white">Dark Mode</span>
                                 </>
                             )}
                         </button>
 
                         {user ? (
                             <>
-                                <span className="block text-primary-text dark:text-dark-text font-medium">
+                                <span className="block text-gray-900 dark:text-white font-medium">
                                     {username}
                                 </span>
                                 <a
                                     href="/logout"
                                     onClick={handleToggleDrawer}
-                                    className="block text-primary-text dark:text-dark-text hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
+                                    className="block text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
                                 >
                                     Logout
                                 </a>
@@ -210,14 +204,14 @@ const Header = () => {
                                 <a
                                     href="/login"
                                     onClick={handleToggleDrawer}
-                                    className="block text-primary-text dark:text-dark-text hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
+                                    className="block text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
                                 >
                                     Log in
                                 </a>
                                 <a
                                     href="/signup"
                                     onClick={handleToggleDrawer}
-                                    className="block bg-accent-1 hover:bg-accent-2 text-white font-medium rounded px-4 py-2 transition-colors text-center"
+                                    className="block bg-blue-600 hover:bg-blue-700 text-white font-medium rounded px-4 py-2 text-center"
                                 >
                                     Get started
                                 </a>
