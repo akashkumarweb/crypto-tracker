@@ -15,129 +15,141 @@ const Header = () => {
     const username = user?.displayName || user?.email
 
     return (
-        <header className="bg-white dark:bg-[#18181b] border-b border-gray-200 dark:border-gray-700 shadow-sm transition-colors">
-            <nav className="max-w-screen-xl mx-auto px-4 md:px-6 py-3 flex items-center justify-between">
+        <header className="sticky top-0 z-50 bg-white/80 dark:bg-apple-gray-900/80 backdrop-blur-xl border-b border-slate-200 dark:border-apple-gray-800 shadow-sm transition-all duration-300">
+            <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
                 {/* Logo */}
                 <div className="flex items-center">
-                    <a href="/" className="flex items-center">
-                        <img
-                            src="/k-logo.png"
-                            className="h-8 w-auto mr-2"
-                            alt="Logo"
-                        />
+                    <a href="/" className="flex items-center group">
+                        <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mr-3 group-hover:scale-110 transition-transform duration-300">
+                            <span className="text-white font-bold text-lg">C</span>
+                        </div>
+                        <span className="text-2xl font-bold text-slate-900 dark:text-white group-hover:text-blue-600 transition-colors">
+                            CryptoAnalysis
+                        </span>
                     </a>
                 </div>
 
                 {/* Desktop Nav */}
-                <ul className="hidden md:flex items-center space-x-6">
+                <ul className="hidden md:flex items-center space-x-8">
                     <li>
                         <a
                             href="/"
-                            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
+                            className="text-slate-700 dark:text-apple-gray-300 hover:text-blue-600 dark:hover:text-white font-medium transition-all duration-300 relative group"
                         >
                             Home
+                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
                         </a>
                     </li>
                     <li>
                         <a
                             href="/markets"
-                            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
+                            className="text-slate-700 dark:text-apple-gray-300 hover:text-blue-600 dark:hover:text-white font-medium transition-all duration-300 relative group"
                         >
                             Markets
+                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
                         </a>
                     </li>
                     <li>
                         <a
                             href="/watchlist"
-                            className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
+                            className="text-slate-700 dark:text-apple-gray-300 hover:text-blue-600 dark:hover:text-white font-medium transition-all duration-300 relative group"
                         >
                             Watchlist
+                            <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
                         </a>
                     </li>
                 </ul>
 
                 {/* Desktop Right Side */}
-                <div className="hidden md:flex items-center space-x-4">
+                <div className="hidden md:flex items-center space-x-6">
                     {/* Theme Toggle Button */}
                     <button
                         onClick={toggleTheme}
-                        className="p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                        className="p-3 rounded-2xl bg-slate-100 dark:bg-apple-gray-800 hover:bg-slate-200 dark:hover:bg-apple-gray-700 transition-all duration-300 group"
                     >
                         {theme === 'dark' ? (
-                            <SunIcon className="w-5 h-5 text-yellow-400" />
+                            <SunIcon className="w-5 h-5 text-yellow-500 group-hover:rotate-180 transition-transform duration-500" />
                         ) : (
-                            <MoonIcon className="w-5 h-5 text-gray-900" />
+                            <MoonIcon className="w-5 h-5 text-slate-600 group-hover:rotate-180 transition-transform duration-500" />
                         )}
                     </button>
 
                     {user ? (
-                        <>
-                            <span className="text-gray-900 dark:text-white font-medium">
-                                {username}
-                            </span>
+                        <div className="flex items-center space-x-4">
+                            <div className="flex items-center space-x-3">
+                                <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                                    <span className="text-white text-sm font-semibold">
+                                        {username?.charAt(0).toUpperCase()}
+                                    </span>
+                                </div>
+                                <span className="text-slate-900 dark:text-white font-medium">
+                                    {username}
+                                </span>
+                            </div>
                             <a
                                 href="/logout"
-                                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
+                                className="text-slate-700 dark:text-apple-gray-300 hover:text-red-600 dark:hover:text-red-400 font-medium transition-colors"
                             >
                                 Logout
                             </a>
-                        </>
+                        </div>
                     ) : (
-                        <>
+                        <div className="flex items-center space-x-4">
                             <a
                                 href="/login"
-                                className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
+                                className="text-slate-700 dark:text-apple-gray-300 hover:text-blue-600 dark:hover:text-white font-medium transition-colors"
                             >
-                                Log in
+                                Sign in
                             </a>
                             <a
                                 href="/signup"
-                                className="bg-blue-600 hover:bg-blue-700 text-white font-medium rounded px-4 py-2 transition-colors"
+                                className="btn-primary"
                             >
                                 Get started
                             </a>
-                        </>
+                        </div>
                     )}
                 </div>
 
                 {/* Mobile Toggle */}
                 <button
                     onClick={handleToggleDrawer}
-                    className="md:hidden text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+                    className="md:hidden p-3 rounded-2xl bg-slate-100 dark:bg-apple-gray-800 hover:bg-slate-200 dark:hover:bg-apple-gray-700 transition-all duration-300"
                 >
-                    <Bars3Icon className="w-6 h-6" />
+                    <Bars3Icon className="w-6 h-6 text-slate-700 dark:text-apple-gray-300" />
                 </button>
             </nav>
 
             {/* Mobile Drawer */}
             <div
-                className={`fixed top-0 left-0 h-full z-10 w-64 bg-white dark:bg-[#1c1c1e] shadow-lg transform transition-transform duration-300 ${drawerOpen ? 'translate-x-0' : '-translate-x-full'
+                className={`fixed top-0 left-0 h-full z-50 w-80 bg-white/95 dark:bg-apple-gray-900/95 backdrop-blur-xl shadow-2xl transform transition-transform duration-300 ease-out ${drawerOpen ? 'translate-x-0' : '-translate-x-full'
                     } md:hidden`}
             >
-                <div className="flex items-center justify-between px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+                <div className="flex items-center justify-between px-6 py-6 border-b border-slate-200 dark:border-apple-gray-800">
                     <div className="flex items-center">
-                        <img
-                            src="/k-logo.png"
-                            className="h-8 w-auto mr-2"
-                            alt="Logo"
-                        />
+                        <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mr-3">
+                            <span className="text-white font-bold text-lg">C</span>
+                        </div>
+                        <span className="text-xl font-bold text-slate-900 dark:text-white">
+                            CryptoAnalysis
+                        </span>
                     </div>
                     <button
                         onClick={handleToggleDrawer}
-                        className="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
+                        className="p-2 rounded-xl bg-slate-100 dark:bg-apple-gray-800 hover:bg-slate-200 dark:hover:bg-apple-gray-700 transition-all duration-300"
                     >
-                        <XMarkIcon className="w-6 h-6" />
+                        <XMarkIcon className="w-6 h-6 text-slate-700 dark:text-apple-gray-300" />
                     </button>
                 </div>
 
                 {/* Drawer Nav */}
-                <nav className="px-4 py-4">
-                    <ul className="flex flex-col space-y-4">
+                <nav className="px-6 py-8">
+                    <ul className="flex flex-col space-y-6">
                         <li>
                             <a
                                 href="/"
                                 onClick={handleToggleDrawer}
-                                className="block text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-400 font-medium transition-colors"
+                                className="block text-lg text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors py-3"
                             >
                                 Home
                             </a>
@@ -146,7 +158,7 @@ const Header = () => {
                             <a
                                 href="/markets"
                                 onClick={handleToggleDrawer}
-                                className="block text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-400 font-medium transition-colors"
+                                className="block text-lg text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors py-3"
                             >
                                 Markets
                             </a>
@@ -155,68 +167,83 @@ const Header = () => {
                             <a
                                 href="/watchlist"
                                 onClick={handleToggleDrawer}
-                                className="block text-gray-900 dark:text-white hover:text-gray-700 dark:hover:text-gray-400 font-medium transition-colors"
+                                className="block text-lg text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors py-3"
                             >
                                 Watchlist
                             </a>
                         </li>
                     </ul>
 
-                    <div className="mt-6 flex flex-col space-y-3">
+                    <div className="mt-12 space-y-6">
                         {/* Theme Toggle - Mobile */}
                         <button
                             onClick={() => {
                                 toggleTheme()
                             }}
-                            className="p-2 rounded transition-colors hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center space-x-2"
+                            className="w-full flex items-center justify-between p-4 rounded-2xl bg-slate-100 dark:bg-apple-gray-800 hover:bg-slate-200 dark:hover:bg-apple-gray-700 transition-all duration-300"
                         >
+                            <span className="text-slate-900 dark:text-white font-medium">Theme</span>
                             {theme === 'dark' ? (
-                                <>
-                                    <SunIcon className="w-5 h-5 text-yellow-400" />
-                                    <span className="text-gray-900 dark:text-white">Light Mode</span>
-                                </>
+                                <SunIcon className="w-5 h-5 text-yellow-500" />
                             ) : (
-                                <>
-                                    <MoonIcon className="w-5 h-5 text-gray-900" />
-                                    <span className="text-gray-900 dark:text-white">Dark Mode</span>
-                                </>
+                                <MoonIcon className="w-5 h-5 text-slate-600" />
                             )}
                         </button>
 
                         {user ? (
-                            <>
-                                <span className="block text-gray-900 dark:text-white font-medium">
-                                    {username}
-                                </span>
+                            <div className="space-y-4">
+                                <div className="flex items-center space-x-3 p-4 rounded-2xl bg-slate-100 dark:bg-apple-gray-800">
+                                    <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                                        <span className="text-white font-semibold">
+                                            {username?.charAt(0).toUpperCase()}
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <div className="font-semibold text-slate-900 dark:text-white">
+                                            {username}
+                                        </div>
+                                        <div className="text-sm text-slate-500 dark:text-apple-gray-500">
+                                            Active User
+                                        </div>
+                                    </div>
+                                </div>
                                 <a
                                     href="/logout"
                                     onClick={handleToggleDrawer}
-                                    className="block text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
+                                    className="block w-full text-center py-4 px-6 rounded-2xl bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors"
                                 >
-                                    Logout
+                                    Sign Out
                                 </a>
-                            </>
+                            </div>
                         ) : (
-                            <>
+                            <div className="space-y-4">
                                 <a
                                     href="/login"
                                     onClick={handleToggleDrawer}
-                                    className="block text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium transition-colors"
+                                    className="block w-full text-center py-4 px-6 rounded-2xl bg-slate-100 dark:bg-apple-gray-800 text-slate-900 dark:text-white font-semibold hover:bg-slate-200 dark:hover:bg-apple-gray-700 transition-colors"
                                 >
-                                    Log in
+                                    Sign in
                                 </a>
                                 <a
                                     href="/signup"
                                     onClick={handleToggleDrawer}
-                                    className="block bg-blue-600 hover:bg-blue-700 text-white font-medium rounded px-4 py-2 text-center"
+                                    className="block w-full text-center py-4 px-6 rounded-2xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:shadow-lg transition-all duration-300"
                                 >
                                     Get started
                                 </a>
-                            </>
+                            </div>
                         )}
                     </div>
                 </nav>
             </div>
+
+            {/* Backdrop for mobile drawer */}
+            {drawerOpen && (
+                <div
+                    className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 md:hidden"
+                    onClick={handleToggleDrawer}
+                />
+            )}
         </header>
     )
 }

@@ -1,41 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
+    /* Apple-inspired color system */
+    --apple-blue: #007AFF;
+    --apple-green: #34C759;
+    --apple-red: #FF3B30;
+    --apple-orange: #FF9500;
+    --apple-purple: #AF52DE;
+    --apple-pink: #FF2D92;
+    --apple-yellow: #FFCC02;
+
     /* Light mode defaults */
-    --bg-color: #F7F6FA;
-    --text-color: #1B1B1F;
+    --bg-color: #F5F5F7;
+    --text-color: #1C1C1E;
+    --card-bg: #FFFFFF;
+    --border-color: #E5E5E7;
 }
 
 /* Dark mode overrides */
 .dark {
-    --bg-color: #1E1E2F;
-    --text-color: #E4E4E7;
+    --bg-color: #1C1C1E;
+    --text-color: #F5F5F7;
+    --card-bg: #2C2C2E;
+    --border-color: #3A3A3C;
 }
 
-/* Then use them: */
+/* Base styles */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
 body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     background-color: var(--bg-color);
     color: var(--text-color);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--apple-gray-400);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--apple-gray-500);
+}
+
+/* Glassmorphism effects */
+.glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-dark {
+    background: rgba(28, 28, 30, 0.8);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Apple-style buttons */
+.btn-apple {
+    @apply px-6 py-3 rounded-2xl font-semibold transition-all duration-300 ease-out;
+    @apply hover:scale-105 active:scale-95;
+    @apply focus:outline-none focus:ring-4 focus:ring-apple-blue/20;
+}
+
+.btn-primary {
+    @apply btn-apple bg-apple-blue text-white;
+    @apply hover:bg-apple-blue/90 shadow-apple-lg;
+}
+
+.btn-secondary {
+    @apply btn-apple bg-apple-gray-100 text-apple-gray-900;
+    @apply hover:bg-apple-gray-200 dark:bg-apple-gray-800 dark:text-white;
+    @apply dark:hover:bg-apple-gray-700;
+}
+
+/* Card styles */
+.card-apple {
+    @apply bg-white dark:bg-apple-gray-900 rounded-3xl shadow-apple;
+    @apply border border-apple-gray-200 dark:border-apple-gray-800;
+    @apply transition-all duration-300 hover:shadow-apple-lg;
+}
+
+/* Gradient backgrounds */
+.gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.gradient-secondary {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+}
+
+.gradient-success {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.gradient-warning {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+}
+
+/* Text utilities */
+.text-gradient {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Animation utilities */
+.hover-lift {
+    @apply transition-transform duration-300 hover:-translate-y-2;
+}
+
+.hover-glow {
+    @apply transition-all duration-300 hover:shadow-glow;
+}
+
+/* Custom focus styles */
+.focus-ring {
+    @apply focus:outline-none focus:ring-4 focus:ring-apple-blue/20;
+}
+
+/* Loading animations */
+.loading-dots {
+    display: inline-block;
+}
+
+.loading-dots::after {
+    content: '';
+    animation: dots 1.5s steps(5, end) infinite;
+}
+
+@keyframes dots {
+
+    0%,
+    20% {
+        content: '';
+    }
+
+    40% {
+        content: '.';
+    }
+
+    60% {
+        content: '..';
+    }
+
+    80%,
+    100% {
+        content: '...';
+    }
+}
+
+/* Custom components */
+.price-card {
+    @apply card-apple p-6 hover-lift;
+    @apply border-l-4 border-apple-blue;
+}
+
+.stat-card {
+    @apply card-apple p-4 text-center;
+    @apply hover:shadow-apple-xl transition-all duration-300;
+}
+
+/* Responsive typography */
+.text-responsive {
+    @apply text-4xl md:text-5xl lg:text-6xl xl:text-7xl;
+}
+
+/* Custom utilities for crypto app */
+.crypto-positive {
+    @apply text-apple-green font-semibold;
+}
+
+.crypto-negative {
+    @apply text-apple-red font-semibold;
+}
+
+.crypto-neutral {
+    @apply text-apple-gray-600 dark:text-apple-gray-400;
+}
+
+/* Enhanced table styles */
+.table-apple {
+    @apply w-full border-collapse;
+}
+
+.table-apple th {
+    @apply bg-apple-gray-50 dark:bg-apple-gray-800 text-apple-gray-900 dark:text-white;
+    @apply font-semibold text-left py-4 px-6;
+}
+
+.table-apple td {
+    @apply py-4 px-6 border-b border-apple-gray-200 dark:border-apple-gray-800;
+}
+
+.table-apple tr:hover {
+    @apply bg-apple-gray-50 dark:bg-apple-gray-800/50;
+}
+
+/* Legacy compatibility */
 .bg-accent-1 {
-    background-color: #2563eb;
-    /* Blue accent */
+    background-color: var(--apple-blue);
 }
-
-/* .dark\:bg-dark-bg { */
-/* background-color: #18181b; */
-/* Almost black for dark mode */
-/* } */
 
 .text-positive {
-    color: #16a34a;
-    /* Green for positive change */
+    color: var(--apple-green);
 }
 
 .text-negative {
-    color: #dc2626;
-    /* Red for negative change */
+    color: var(--apple-red);
 }
