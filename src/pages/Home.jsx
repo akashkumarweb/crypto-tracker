@@ -48,33 +48,33 @@ const Home = () => {
         },
         {
             icon: <ShieldCheckIcon className="w-8 h-8" />,
-            title: "Bank-Grade Security",
-            description: "Multi-layer encryption and secure infrastructure you can trust"
+            title: "Secure Watchlists",
+            description: "Multi-layer encryption and secure infrastructure for your personal watchlists"
         },
         {
             icon: <BoltIcon className="w-8 h-8" />,
             title: "Lightning Fast",
-            description: "Instant price updates and seamless trading experience"
+            description: "Instant price updates and seamless watchlist management"
         },
         {
             icon: <GlobeAltIcon className="w-8 h-8" />,
             title: "Global Markets",
-            description: "Access to 1000+ cryptocurrencies across global exchanges"
+            description: "Track 1000+ cryptocurrencies across global exchanges"
         }
     ]
 
     const stats = [
         { label: "Active Users", value: "50K+", change: "+12%" },
-        { label: "Daily Volume", value: "$2.5B", change: "+8%" },
-        { label: "Supported Coins", value: "1000+", change: "+5%" },
+        { label: "Tracked Coins", value: "1000+", change: "+5%" },
+        { label: "Watchlists", value: "25K+", change: "+8%" },
         { label: "Countries", value: "150+", change: "+3%" }
     ]
 
-    const handleStartTrading = async () => {
+    const handleStartTracking = async () => {
         if (!user) {
             const result = await MySwal.fire({
                 title: 'Sign In Required',
-                text: 'Please sign in to create your watchlist and start trading',
+                text: 'Please sign in to create your watchlist and start tracking cryptocurrencies',
                 icon: 'info',
                 showCancelButton: true,
                 confirmButtonText: 'Sign In',
@@ -106,18 +106,18 @@ const Home = () => {
                     <div className="text-center animate-fade-in">
                         <h1 className="text-responsive font-black text-slate-900 dark:text-white mb-8">
                             The Future of
-                            <span className="text-gradient block"> Crypto Trading</span>
+                            <span className="text-gradient block"> Crypto Tracking</span>
                         </h1>
                         <p className="text-xl md:text-2xl text-slate-600 dark:text-apple-gray-400 max-w-4xl mx-auto mb-12 leading-relaxed">
-                            Experience the most advanced cryptocurrency platform with real-time analytics,
-                            AI-powered insights, and institutional-grade security.
+                            Experience the most advanced cryptocurrency watchlist platform with real-time analytics,
+                            AI-powered insights, and personalized coin tracking.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
                             <button
-                                onClick={handleStartTrading}
+                                onClick={handleStartTracking}
                                 className="btn-primary text-lg px-8 py-4 animate-scale-in"
                             >
-                                Start Trading Now
+                                Start Tracking Now
                             </button>
                         </div>
                     </div>
@@ -150,7 +150,7 @@ const Home = () => {
                             Why Choose CryptoAnalysis?
                         </h2>
                         <p className="text-xl text-slate-600 dark:text-apple-gray-400 max-w-3xl mx-auto">
-                            Built with cutting-edge technology and designed for the modern trader
+                            Built with cutting-edge technology and designed for the modern crypto enthusiast
                         </p>
                     </div>
 
@@ -211,13 +211,19 @@ const Home = () => {
                                                 ) : (
                                                     <ArrowDownIcon className="w-4 h-4 mr-1" />
                                                 )}
-                                                {Math.abs(coin.price_change_percentage_24h).toFixed(2)}%
+                                                {coin.price_change_percentage_24h?.toFixed(2)}%
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="flex items-center justify-between text-sm text-slate-500 dark:text-apple-gray-500">
-                                        <span>Market Cap: ${coin.market_cap?.toLocaleString()}</span>
-                                        <span>Vol: ${coin.total_volume?.toLocaleString()}</span>
+                                    <div className="grid grid-cols-2 gap-4 text-sm">
+                                        <div>
+                                            <span className="text-slate-500 dark:text-apple-gray-500">Market Cap</span>
+                                            <div className="font-semibold text-slate-700 dark:text-apple-gray-300">${coin.market_cap?.toLocaleString()}</div>
+                                        </div>
+                                        <div>
+                                            <span className="text-slate-500 dark:text-apple-gray-500">Volume</span>
+                                            <div className="font-semibold text-slate-700 dark:text-apple-gray-300">${coin.total_volume?.toLocaleString()}</div>
+                                        </div>
                                     </div>
                                 </div>
                             ))}
@@ -227,55 +233,50 @@ const Home = () => {
             </section>
 
             {/* Testimonials Section */}
-            <section className="py-20 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-apple-blue/5 dark:to-apple-purple/5">
+            <section className="py-20 bg-gradient-to-br from-blue-50 to-purple-50 dark:from-apple-gray-800 dark:to-apple-gray-900">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
                         <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">
-                            Trusted by Traders Worldwide
+                            What Our Users Say
                         </h2>
                         <p className="text-xl text-slate-600 dark:text-apple-gray-400">
-                            Join thousands of satisfied users who trust our platform
+                            Join thousands of crypto enthusiasts tracking their favorite coins
                         </p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {[
                             {
-                                quote: "CryptoAnalysis has completely transformed my trading experience. The real-time data and intuitive interface make it my go-to platform.",
-                                author: "Sarah Chen",
-                                role: "Professional Trader",
+                                name: "Sarah Chen",
+                                role: "Crypto Investor",
+                                content: "The best watchlist platform I've used. Real-time updates and beautiful charts make tracking my portfolio effortless.",
                                 rating: 5
                             },
                             {
-                                quote: "The security features and customer support are outstanding. I feel confident trading large amounts knowing my assets are protected.",
-                                author: "Michael Rodriguez",
-                                role: "Institutional Investor",
+                                name: "Michael Rodriguez",
+                                role: "Day Trader",
+                                content: "Lightning-fast updates and intuitive interface. My go-to platform for crypto market analysis.",
                                 rating: 5
                             },
                             {
-                                quote: "Best crypto platform I've ever used. The analytics are incredibly detailed and the mobile app is flawless.",
-                                author: "Emma Thompson",
+                                name: "Emma Thompson",
                                 role: "Crypto Enthusiast",
+                                content: "Finally, a platform that makes crypto tracking simple and beautiful. Love the personalized watchlists!",
                                 rating: 5
                             }
                         ].map((testimonial, index) => (
-                            <div key={index} className="card-apple p-8 animate-slide-up"
-                                style={{ animationDelay: `${index * 0.2}s` }}>
+                            <div key={index} className="card-apple p-8 animate-slide-up" style={{ animationDelay: `${index * 0.2}s` }}>
                                 <div className="flex items-center mb-4">
                                     {[...Array(testimonial.rating)].map((_, i) => (
-                                        <StarIcon key={i} className="w-5 h-5 text-yellow-500 fill-current" />
+                                        <StarIcon key={i} className="w-5 h-5 text-yellow-500" />
                                     ))}
                                 </div>
-                                <p className="text-lg text-slate-700 dark:text-apple-gray-300 mb-6 italic">
-                                    "{testimonial.quote}"
+                                <p className="text-slate-700 dark:text-apple-gray-300 mb-6 italic">
+                                    "{testimonial.content}"
                                 </p>
                                 <div>
-                                    <div className="font-semibold text-slate-900 dark:text-white">
-                                        {testimonial.author}
-                                    </div>
-                                    <div className="text-sm text-slate-500 dark:text-apple-gray-500">
-                                        {testimonial.role}
-                                    </div>
+                                    <div className="font-semibold text-slate-900 dark:text-white">{testimonial.name}</div>
+                                    <div className="text-sm text-slate-500 dark:text-apple-gray-500">{testimonial.role}</div>
                                 </div>
                             </div>
                         ))}
@@ -284,21 +285,27 @@ const Home = () => {
             </section>
 
             {/* CTA Section */}
-            <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
-                <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-6">
-                        Ready to Start Trading?
+            <section className="py-20 bg-gradient-to-r from-blue-600 to-purple-600">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+                        Ready to Start Tracking?
                     </h2>
-                    <p className="text-xl mb-8 opacity-90">
-                        Join thousands of traders who trust CryptoAnalysis for their cryptocurrency needs
+                    <p className="text-xl text-blue-100 mb-8 max-w-3xl mx-auto">
+                        Join thousands of crypto enthusiasts who trust CryptoAnalysis for their daily market tracking
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                        <button className="bg-white text-blue-600 px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-slate-50 transition-colors">
-                            Create Free Account
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button
+                            onClick={handleStartTracking}
+                            className="btn-secondary text-lg px-8 py-4 hover:text-blue-600"
+                        >
+                            Start Tracking Now
                         </button>
-                        <button className="border-2 border-white text-white px-8 py-4 rounded-2xl font-semibold text-lg hover:bg-white hover:text-blue-600 transition-colors">
-                            Learn More
-                        </button>
+                        <a
+                            href="/markets"
+                            className="btn-primary text-lg px-8 py-4 hover:text-blue-600"
+                        >
+                            Explore Markets
+                        </a>
                     </div>
                 </div>
             </section>

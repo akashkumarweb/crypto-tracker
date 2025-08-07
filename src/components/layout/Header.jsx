@@ -54,7 +54,7 @@ const Header = () => {
                             href="/watchlist"
                             className="text-slate-700 dark:text-apple-gray-300 hover:text-blue-600 dark:hover:text-white font-medium transition-all duration-300 relative group"
                         >
-                            Watchlist
+                            My Watchlist
                             <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all duration-300 group-hover:w-full"></span>
                         </a>
                     </li>
@@ -160,22 +160,22 @@ const Header = () => {
                             </a>
                         </li>
                         <li>
-                            <a
-                                href="/markets"
-                                onClick={handleToggleDrawer}
-                                className="block text-lg text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors py-3"
-                            >
-                                Markets
-                            </a>
-                        </li>
-                        <li>
-                            <a
-                                href="/watchlist"
-                                onClick={handleToggleDrawer}
-                                className="block text-lg text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors py-3"
-                            >
-                                Watchlist
-                            </a>
+                                                    <a
+                            href="/markets"
+                            onClick={handleToggleDrawer}
+                            className="block text-lg text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors py-3"
+                        >
+                            Markets
+                        </a>
+                    </li>
+                    <li>
+                        <a
+                            href="/watchlist"
+                            onClick={handleToggleDrawer}
+                            className="block text-lg text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors py-3"
+                        >
+                            My Watchlist
+                        </a>
                         </li>
                     </ul>
 

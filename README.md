@@ -1,4 +1,4 @@
-# 🚀 CryptoAnalysis - Advanced Cryptocurrency Trading Platform | React TypeScript
+# 🚀 CryptoAnalysis - Advanced Cryptocurrency Watchlist Platform | React TypeScript
 
 [![React](https://img.shields.io/badge/React-18.3.1-blue?style=for-the-badge&logo=react)](https://reactjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6.2-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
@@ -10,14 +10,14 @@
 
 ## 🎯 Executive Summary
 
-**CryptoAnalysis** is a production-ready cryptocurrency trading platform that demonstrates **senior-level React development**, **modern design principles**, and **real-world application architecture**. Built with cutting-edge technologies and designed to impress hiring managers and technical recruiters.
+**CryptoAnalysis** is a production-ready cryptocurrency watchlist and analysis platform that demonstrates **senior-level React development**, **modern design principles**, and **real-world application architecture**. Built with cutting-edge technologies and designed to impress hiring managers and technical recruiters.
 
 ### 🏆 Key Achievements
 - **95+ Lighthouse Score** across all performance metrics
 - **Real-time cryptocurrency data** from CoinGecko API
 - **Advanced charting** with multiple timeframes
 - **Apple-inspired design** with smooth animations
-- **Firebase authentication** and data persistence
+- **Firebase authentication** and watchlist persistence
 - **Responsive design** optimized for all devices
 
 ## 🛠️ Technology Stack

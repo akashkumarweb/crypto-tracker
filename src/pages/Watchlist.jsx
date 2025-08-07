@@ -23,7 +23,13 @@ const Watchlist = () => {
         return (
             <div className="p-6 bg-primary-bg min-h-screen text-primary-text dark:bg-dark-bg dark:text-white text-center">
                 <h1 className="text-4xl font-extrabold mb-8">Your Watchlist</h1>
-                <p className="text-gray-500 dark:text-gray-400 text-xl">No coins in your watchlist yet. Add your favorite coins to track them!</p>
+                <p className="text-gray-500 dark:text-gray-400 text-xl mb-8">No coins in your watchlist yet. Add your favorite cryptocurrencies to track them!</p>
+                <a 
+                    href="/markets" 
+                    className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-2xl transition-colors"
+                >
+                    Explore Markets
+                </a>
             </div>
         )
     }

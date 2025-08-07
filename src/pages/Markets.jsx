@@ -171,7 +171,7 @@ const Markets = () => {
                         Crypto Markets
                     </h1>
                     <p className="text-xl text-slate-600 dark:text-apple-gray-400">
-                        Real-time cryptocurrency prices and market data
+                        Explore cryptocurrencies and add your favorites to your watchlist
                     </p>
                 </div>
 
