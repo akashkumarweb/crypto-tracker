@@ -5,7 +5,7 @@ import useDarkMode from '../../hooks/useDarkMode'
 
 const Header = () => {
     const [drawerOpen, setDrawerOpen] = useState(false)
-    const { user } = useAuth()
+    const { user, logout } = useAuth()
     const [theme, toggleTheme] = useDarkMode()
 
     const handleToggleDrawer = () => {
@@ -86,12 +86,17 @@ const Header = () => {
                                     {username}
                                 </span>
                             </div>
-                            <a
-                                href="/logout"
-                                className="text-slate-700 dark:text-apple-gray-300 hover:text-red-600 dark:hover:text-red-400 font-medium transition-colors"
+                            <button
+                                onClick={async () => {
+                                    const result = await logout()
+                                    if (result.success) {
+                                        window.location.href = '/'
+                                    }
+                                }}
+                                className="text-slate-700 dark:text-apple-gray-300 hover:text-red-600 dark:hover:text-red-400 font-medium transition-colors cursor-pointer"
                             >
                                 Logout
-                            </a>
+                            </button>
                         </div>
                     ) : (
                         <div className="flex items-center space-x-4">
@@ -207,13 +212,18 @@ const Header = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <a
-                                    href="/logout"
-                                    onClick={handleToggleDrawer}
-                                    className="block w-full text-center py-4 px-6 rounded-2xl bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors"
+                                <button
+                                    onClick={async () => {
+                                        const result = await logout()
+                                        if (result.success) {
+                                            handleToggleDrawer()
+                                            window.location.href = '/'
+                                        }
+                                    }}
+                                    className="block w-full text-center py-4 px-6 rounded-2xl bg-red-600 text-white font-semibold hover:bg-red-700 transition-colors cursor-pointer"
                                 >
                                     Sign Out
-                                </a>
+                                </button>
                             </div>
                         ) : (
                             <div className="space-y-4">

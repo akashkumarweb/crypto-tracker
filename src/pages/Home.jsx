@@ -12,10 +12,13 @@ import {
     GlobeAltIcon,
     UserGroupIcon
 } from '@heroicons/react/24/outline'
+import { useAuth } from '../context/AuthContext'
+import MySwal from 'sweetalert2'
 
 const Home = () => {
     const [topMovers, setTopMovers] = useState([])
     const [isLoading, setIsLoading] = useState(true)
+    const { user } = useAuth()
 
     useEffect(() => {
         (async () => {
@@ -67,6 +70,29 @@ const Home = () => {
         { label: "Countries", value: "150+", change: "+3%" }
     ]
 
+    const handleStartTrading = async () => {
+        if (!user) {
+            const result = await MySwal.fire({
+                title: 'Sign In Required',
+                text: 'Please sign in to create your watchlist and start trading',
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonText: 'Sign In',
+                cancelButtonText: 'Cancel',
+                confirmButtonColor: '#3B82F6',
+                cancelButtonColor: '#6B7280'
+            })
+
+            if (result.isConfirmed) {
+                window.location.href = '/login'
+            }
+            return
+        }
+
+        // User is logged in, redirect to markets
+        window.location.href = '/markets'
+    }
+
     return (
         <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-apple-gray-900 dark:via-apple-gray-800 dark:to-apple-gray-900">
             {/* Hero Section */}
@@ -87,7 +113,10 @@ const Home = () => {
                             AI-powered insights, and institutional-grade security.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                            <button className="btn-primary text-lg px-8 py-4 animate-scale-in">
+                            <button
+                                onClick={handleStartTrading}
+                                className="btn-primary text-lg px-8 py-4 animate-scale-in"
+                            >
                                 Start Trading Now
                             </button>
                         </div>
