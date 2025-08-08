@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 64 64" role="img" aria-label="CryptoAnalysis">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2563EB"/>
+      <stop offset="100%" stop-color="#7C3AED"/>
+    </linearGradient>
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="rgba(0,0,0,0.25)"/>
+    </filter>
+  </defs>
+  <!-- Rounded gradient background -->
+  <rect x="2" y="2" width="60" height="60" rx="14" ry="14" fill="url(#g)" filter="url(#shadow)"/>
+  <!-- Subtle inner glow -->
+  <rect x="4" y="4" width="56" height="56" rx="12" ry="12" fill="url(#g)" opacity="0.2"/>
+  <!-- C mark -->
+  <circle cx="32" cy="32" r="16" fill="none" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" stroke-dasharray="80 40" transform="rotate(-35 32 32)"/>
+</svg>
