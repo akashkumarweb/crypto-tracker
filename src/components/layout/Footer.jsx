@@ -44,14 +44,14 @@ const Footer = () => {
                                 aria-label={social.name}
                                 title={social.name}
                             >
-                                <social.icon className="w-5 h-5 text-apple-gray-400 group-hover:text-white transition-colors" aria-hidden="true" />
+                                <social.icon className="w-5 h-5 text-apple-gray-300 group-hover:text-white transition-colors" aria-hidden="true" />
                             </a>
                         ))}
                         <a
                             href="https://akashbuilds.com/contact"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center space-x-2 text-apple-gray-400 hover:text-white transition-colors underline-offset-4 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="flex items-center space-x-2 text-blue-400 hover:text-blue-300 transition-colors underline-offset-4 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500"
                             aria-label="Contact Akash Kumar"
                             title="Contact Akash Kumar"
                         >
@@ -81,7 +81,7 @@ const Footer = () => {
                                 href="https://github.com/akashkumarweb/crypto-tracker"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-sm text-apple-gray-400 hover:text-white transition-colors flex items-center space-x-1 underline-offset-4 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="text-sm text-blue-400 hover:text-blue-300 transition-colors flex items-center space-x-1 underline-offset-4 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 aria-label="View source on GitHub"
                                 title="View source on GitHub"
                             >

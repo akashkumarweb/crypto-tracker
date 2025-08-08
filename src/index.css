@@ -86,9 +86,9 @@ body {
     @apply focus:outline-none focus:ring-4 focus:ring-apple-blue/20;
 }
 
+/* Increased contrast for primary buttons */
 .btn-primary {
-    @apply btn-apple bg-apple-blue text-white;
-    @apply hover:bg-apple-blue/90 shadow-apple-lg;
+    @apply btn-apple bg-blue-600 text-white hover:bg-blue-700 shadow-apple-lg;
 }
 
 .btn-secondary {
@@ -190,13 +190,13 @@ body {
     @apply text-4xl md:text-5xl lg:text-6xl xl:text-7xl;
 }
 
-/* Custom utilities for crypto app */
+/* Improved contrast for status text */
 .crypto-positive {
-    @apply text-apple-green font-semibold;
+    @apply font-semibold text-green-700 dark:text-green-400;
 }
 
 .crypto-negative {
-    @apply text-apple-red font-semibold;
+    @apply font-semibold text-red-700 dark:text-red-400;
 }
 
 .crypto-neutral {
