@@ -142,8 +142,8 @@ const Markets = () => {
     if (loading) {
         return (
             <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-apple-gray-900 dark:via-apple-gray-800 dark:to-apple-gray-900 flex items-center justify-center">
-                <div className="text-center">
-                    <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+                <div className="text-center" role="status" aria-live="polite">
+                    <div className="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" aria-hidden="true"></div>
                     <div className="text-xl text-slate-600 dark:text-apple-gray-400">Loading markets...</div>
                 </div>
             </div>
@@ -153,8 +153,8 @@ const Markets = () => {
     if (error) {
         return (
             <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-apple-gray-900 dark:via-apple-gray-800 dark:to-apple-gray-900 flex items-center justify-center">
-                <div className="text-center">
-                    <div className="text-red-500 text-6xl mb-4">⚠️</div>
+                <div className="text-center" role="alert">
+                    <div className="text-red-500 text-6xl mb-4" aria-hidden="true">⚠️</div>
                     <div className="text-xl text-slate-900 dark:text-white mb-2">Error Loading Markets</div>
                     <div className="text-slate-600 dark:text-apple-gray-400">{error}</div>
                 </div>
@@ -163,7 +163,7 @@ const Markets = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-apple-gray-900 dark:via-apple-gray-800 dark:to-apple-gray-900">
+        <div id="main" role="main" className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-apple-gray-900 dark:via-apple-gray-800 dark:to-apple-gray-900">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 {/* Header */}
                 <div className="text-center mb-12 animate-fade-in">
@@ -179,8 +179,10 @@ const Markets = () => {
                 <div className="mb-8 space-y-4 sm:space-y-0 sm:flex sm:items-center sm:justify-between">
                     {/* Search */}
                     <div className="relative max-w-md">
-                        <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" />
+                        <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400" aria-hidden="true" />
+                        <label htmlFor="search" className="sr-only">Search coins</label>
                         <input
+                            id="search"
                             type="text"
                             placeholder="Search coins..."
                             value={searchTerm}
@@ -191,8 +193,10 @@ const Markets = () => {
 
                     {/* Sort */}
                     <div className="flex items-center space-x-4">
-                        <FunnelIcon className="w-5 h-5 text-slate-400" />
+                        <FunnelIcon className="w-5 h-5 text-slate-400" aria-hidden="true" />
+                        <label htmlFor="sort" className="sr-only">Sort by</label>
                         <select
+                            id="sort"
                             value={sortBy}
                             onChange={(e) => setSortBy(e.target.value)}
                             className="bg-white dark:bg-apple-gray-900 border border-slate-200 dark:border-apple-gray-800 rounded-2xl px-4 py-3 focus:ring-2 focus:ring-blue-600 focus:border-transparent transition-all duration-300"
@@ -228,14 +232,15 @@ const Markets = () => {
                 <div className="card-apple overflow-hidden">
                     <div className="overflow-x-auto">
                         <table className="table-apple w-full">
+                            <caption className="sr-only">List of cryptocurrencies with price, change, market cap and volume, with actions to add to watchlist</caption>
                             <thead>
                                 <tr>
-                                    <th className="rounded-tl-3xl">Coin</th>
-                                    <th>Price</th>
-                                    <th>24h Change</th>
-                                    <th>Market Cap</th>
-                                    <th>Volume (24h)</th>
-                                    <th className="rounded-tr-3xl">Actions</th>
+                                    <th className="rounded-tl-3xl" scope="col">Coin</th>
+                                    <th scope="col">Price</th>
+                                    <th scope="col">24h Change</th>
+                                    <th scope="col">Market Cap</th>
+                                    <th scope="col">Volume (24h)</th>
+                                    <th className="rounded-tr-3xl" scope="col">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -245,8 +250,7 @@ const Markets = () => {
                                     const isInWatchlist = watchlist.some((w) => w.id === coin.id)
 
                                     return (
-                                        <tr key={coin.id} className="animate-scale-in hover:bg-slate-50 dark:hover:bg-apple-gray-800/50 transition-all duration-300"
-                                            style={{ animationDelay: `${index * 0.05}s` }}>
+                                        <tr key={coin.id} className="animate-scale-in hover:bg-slate-50 dark:hover:bg-apple-gray-800/50 transition-all duration-300" style={{ animationDelay: `${index * 0.05}s` }}>
                                             <td className="py-6 px-6">
                                                 <div className="flex items-center space-x-4">
                                                     <img
@@ -275,9 +279,9 @@ const Markets = () => {
                                                     : 'bg-red-100 text-red-600 dark:bg-red-900/20 dark:text-red-400'
                                                     }`}>
                                                     {isPositive ? (
-                                                        <ArrowUpIcon className="w-4 h-4" />
+                                                        <ArrowUpIcon className="w-4 h-4" aria-label="Price up" />
                                                     ) : (
-                                                        <ArrowDownIcon className="w-4 h-4" />
+                                                        <ArrowDownIcon className="w-4 h-4" aria-label="Price down" />
                                                     )}
                                                     <span>{Math.abs(priceChange).toFixed(2)}%</span>
                                                 </div>
@@ -300,15 +304,17 @@ const Markets = () => {
                                                         ? 'bg-slate-200 dark:bg-apple-gray-700 text-slate-500 cursor-not-allowed'
                                                         : 'bg-blue-600 hover:bg-blue-700 text-white hover:shadow-lg'
                                                         }`}
+                                                    aria-label={isInWatchlist ? `Added to watchlist` : `Add ${coin.name} to watchlist`}
+                                                    title={isInWatchlist ? `Added` : `Add to watchlist`}
                                                 >
                                                     {isInWatchlist ? (
                                                         <>
-                                                            <CheckIcon className="w-4 h-4" />
+                                                            <CheckIcon className="w-4 h-4" aria-hidden="true" />
                                                             <span>Added</span>
                                                         </>
                                                     ) : (
                                                         <>
-                                                            <PlusIcon className="w-4 h-4" />
+                                                            <PlusIcon className="w-4 h-4" aria-hidden="true" />
                                                             <span>Watchlist</span>
                                                         </>
                                                     )}
@@ -324,8 +330,8 @@ const Markets = () => {
 
                 {/* Empty State */}
                 {filteredAndSortedCoins.length === 0 && searchTerm && (
-                    <div className="text-center py-20">
-                        <div className="text-6xl mb-4">🔍</div>
+                    <div className="text-center py-20" role="status" aria-live="polite">
+                        <div className="text-6xl mb-4" aria-hidden="true">🔍</div>
                         <div className="text-xl text-slate-900 dark:text-white mb-2">No coins found</div>
                         <div className="text-slate-600 dark:text-apple-gray-400">
                             Try adjusting your search terms

@@ -155,7 +155,7 @@ const PriceChart = ({ coinId = 'bitcoin', coinName = 'Bitcoin' }) => {
                     <h3 className="text-xl font-bold text-apple-gray-900 dark:text-white">
                         {coinName} Price Chart
                     </h3>
-                    <div className="w-16 h-16 border-4 border-apple-blue border-t-transparent rounded-full animate-spin"></div>
+                    <div className="w-16 h-16 border-4 border-apple-blue border-t-transparent rounded-full animate-spin" role="status" aria-label="Loading chart" />
                 </div>
                 <div className="h-64 bg-apple-gray-100 dark:bg-apple-gray-800 rounded-2xl animate-pulse"></div>
             </div>
@@ -164,10 +164,10 @@ const PriceChart = ({ coinId = 'bitcoin', coinName = 'Bitcoin' }) => {
 
     if (error) {
         return (
-            <div className="card-apple p-8">
+            <div className="card-apple p-8" role="region" aria-labelledby="chart-error-title">
                 <div className="text-center">
-                    <div className="text-apple-red text-4xl mb-4">⚠️</div>
-                    <h3 className="text-lg font-semibold text-apple-gray-900 dark:text-white mb-2">
+                    <div className="text-apple-red text-4xl mb-4" aria-hidden="true">⚠️</div>
+                    <h3 id="chart-error-title" className="text-lg font-semibold text-apple-gray-900 dark:text-white mb-2">
                         Chart Unavailable
                     </h3>
                     <p className="text-apple-gray-600 dark:text-apple-gray-400">{error}</p>
@@ -177,18 +177,18 @@ const PriceChart = ({ coinId = 'bitcoin', coinName = 'Bitcoin' }) => {
     }
 
     return (
-        <div className="card-apple p-8">
+        <div className="card-apple p-8" role="region" aria-label={`${coinName} price chart`}>
             {/* Header */}
             <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center space-x-3">
-                    <ChartBarIcon className="w-6 h-6 text-apple-blue" />
+                    <ChartBarIcon className="w-6 h-6 text-apple-blue" aria-hidden="true" />
                     <h3 className="text-xl font-bold text-apple-gray-900 dark:text-white">
                         {coinName} Price Chart
                     </h3>
                 </div>
 
                 {/* Timeframe Selector */}
-                <div className="flex items-center space-x-2 bg-apple-gray-100 dark:bg-apple-gray-800 rounded-2xl p-1">
+                <div className="flex items-center space-x-2 bg-apple-gray-100 dark:bg-apple-gray-800 rounded-2xl p-1" role="tablist" aria-label="Select timeframe">
                     {timeframes.map((tf) => (
                         <button
                             key={tf.value}
@@ -197,6 +197,9 @@ const PriceChart = ({ coinId = 'bitcoin', coinName = 'Bitcoin' }) => {
                                 ? 'bg-apple-blue text-white shadow-apple'
                                 : 'text-apple-gray-600 dark:text-apple-gray-400 hover:text-apple-gray-900 dark:hover:text-white'
                                 }`}
+                            role="tab"
+                            aria-selected={timeframe === tf.value}
+                            aria-controls={`chart-panel-${tf.value}`}
                         >
                             {tf.label}
                         </button>
@@ -205,13 +208,13 @@ const PriceChart = ({ coinId = 'bitcoin', coinName = 'Bitcoin' }) => {
             </div>
 
             {/* Chart */}
-            <div className="relative h-64 mb-6">
-                {chartData && <Line data={chartData} options={chartOptions} />}
+            <div id={`chart-panel-${timeframe}`} className="relative h-64 mb-6">
+                {chartData && <Line data={chartData} options={chartOptions} aria-label={`${coinName} price over selected timeframe`} />}
             </div>
 
             {/* Stats */}
             {chartData && (
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4" aria-label="Chart summary stats">
                     {[
                         {
                             label: 'Current Price',
@@ -238,8 +241,8 @@ const PriceChart = ({ coinId = 'bitcoin', coinName = 'Bitcoin' }) => {
                             color: 'text-apple-orange'
                         }
                     ].map((stat, index) => (
-                        <div key={index} className="text-center p-4 bg-apple-gray-50 dark:bg-apple-gray-800 rounded-2xl">
-                            <div className={`w-8 h-8 mx-auto mb-2 rounded-xl bg-${stat.color.split('-')[1]}/10 flex items-center justify-center`}>
+                        <div key={index} className="text-center p-4 bg-apple-gray-50 dark:bg-apple-gray-800 rounded-2xl" role="group" aria-label={stat.label}>
+                            <div className={`w-8 h-8 mx-auto mb-2 rounded-xl bg-apple-gray-200 dark:bg-apple-gray-700 flex items-center justify-center`} aria-hidden="true">
                                 <stat.icon className={`w-4 h-4 ${stat.color}`} />
                             </div>
                             <div className="text-lg font-bold text-apple-gray-900 dark:text-white mb-1">

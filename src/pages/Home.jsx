@@ -94,13 +94,13 @@ const Home = () => {
     }
 
     return (
-        <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-apple-gray-900 dark:via-apple-gray-800 dark:to-apple-gray-900">
+        <main id="main" role="main" className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50 dark:from-apple-gray-900 dark:via-apple-gray-800 dark:to-apple-gray-900">
             {/* Hero Section */}
             <section className="relative overflow-hidden pt-20 pb-32">
                 {/* Background Elements */}
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-transparent to-purple-600/5"></div>
-                <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl animate-float"></div>
-                <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-transparent to-purple-600/5" aria-hidden="true"></div>
+                <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl animate-float" aria-hidden="true"></div>
+                <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} aria-hidden="true"></div>
 
                 <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center animate-fade-in">
